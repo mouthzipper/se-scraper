@@ -5,7 +5,8 @@
   "homepage": "https://scrapeulous.com/",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "publish-to-git": "publish-to-git"
   },
   "keywords": [
     "scraping",
@@ -35,6 +36,7 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "chai-string": "^1.5.0",
-    "mocha": "^6.1.4"
+    "mocha": "^6.1.4",
+    "publish-to-git": "^1.1.7"
   }
 }
