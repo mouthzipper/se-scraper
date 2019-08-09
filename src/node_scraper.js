@@ -270,8 +270,9 @@ class ScrapeManager {
     };
 
     if (
+      this.config.puppeteer_cluster_config.puppeteerOptions &&
       this.config.puppeteer_cluster_config.puppeteerOptions.executablePath !==
-      null
+        null
     ) {
       launch_args = {
         ...launch_args,
