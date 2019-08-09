@@ -1,7 +1,7 @@
 {
   "name": "se-scraper",
-  "version": "1.4.1",
-  "description": "A module using puppeteer to scrape several search engines such as Google, Duckduckgo, Bing or Baidu",
+  "version": "1.4.3",
+  "description": "A module using puppeteer to scrape several search engines such as Google, Duckduckgo, Bing or Baidu with custom configurations to support more puppeteer cluster options",
   "homepage": "https://scrapeulous.com/",
   "main": "index.js",
   "scripts": {
@@ -15,7 +15,7 @@
     "bing",
     "web-scraping"
   ],
-  "author": "Nikolai Tschacher <hire@incolumitas.com> (https://incolumitas.com/)",
+  "author": "Chad Maycumber, Original Author: Nikolai Tschacher <hire@incolumitas.com> (https://incolumitas.com/)",
   "repository": {
     "type": "git",
     "url": "https://github.com/NikolaiT/se-scraper"
