@@ -357,7 +357,12 @@ class ScrapeManager {
         perBrowserOptions: perBrowserOptions
       };
 
-      if (this.config.puppeteer_cluster_config.puppeteer)
+      if (
+        this.config.puppeteer_cluster_config.puppeteer &&
+        this.config.puppeteer_cluster_config.puppeteerOptions &&
+        this.config.puppeteer_cluster_config.puppeteerOptions.executablePath !==
+          null
+      )
         cluster_options.puppeteer = this.config.puppeteer_cluster_config.puppeteer;
 
       this.cluster = await Cluster.launch(cluster_options);
