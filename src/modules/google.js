@@ -175,13 +175,15 @@ class GoogleScraper extends Scraper {
 
         this.last_response = await this.page.goto(startUrl);
 
-        try {
-            await this.page.waitForSelector('input[name="q"]', { timeout: this.STANDARD_TIMEOUT });
-        } catch (e) {
-            return false;
-        }
-
         return true;
+
+        // try {
+        //     await this.page.waitForSelector('input[name="q"]', { timeout: this.STANDARD_TIMEOUT });
+        // } catch (e) {
+        //     return false;
+        // }
+
+        // return true;
     }
 
     async search_keyword(keyword) {

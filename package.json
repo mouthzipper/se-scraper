@@ -1,12 +1,13 @@
 {
   "name": "se-scraper",
-  "version": "1.4.4",
+  "version": "1.4.8",
   "description": "A module using puppeteer to scrape several search engines such as Google, Duckduckgo, Bing or Baidu with custom configurations to support more puppeteer cluster options",
   "homepage": "https://scrapeulous.com/",
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "publish-to-git": "publish-to-git"
+    "publish-to-git": "publish-to-git",
+    "patch": "npm version patch --no-git-tag && publish-to-git"
   },
   "keywords": [
     "scraping",

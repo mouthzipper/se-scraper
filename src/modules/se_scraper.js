@@ -148,7 +148,6 @@ module.exports = class Scraper {
      * @returns {Promise<void>}
      */
     async scraping_loop() {
-        for (var keyword of this.keywords) {
             this.num_keywords++;
             this.keyword = keyword;
             this.results[keyword] = {};
@@ -167,7 +166,7 @@ module.exports = class Scraper {
 
             try {
 
-                await this.search_keyword(keyword);
+                // await this.search_keyword(keyword);
                 // when searching the keyword fails, num_requests will not
                 // be incremented.
                 this.num_requests++;
@@ -201,16 +200,16 @@ module.exports = class Scraper {
 
                     // only load the next page when we will pass the next iteration
                     // step from the while loop
-                    if (this.page_num <= this.config.num_pages) {
+                    // if (this.page_num <= this.config.num_pages) {
 
-                        let next_page_loaded = await this.next_page();
+                    //     let next_page_loaded = await this.next_page();
 
-                        if (next_page_loaded === false) {
-                            break;
-                        } else {
-                            this.num_requests++;
-                        }
-                    }
+                    //     if (next_page_loaded === false) {
+                    //         break;
+                    //     } else {
+                    //         this.num_requests++;
+                    //     }
+                    // }
 
                 } while (this.page_num <= this.config.num_pages);
 
@@ -259,7 +258,6 @@ module.exports = class Scraper {
                 }
 
             }
-        }
     }
 
     /**
