@@ -175,15 +175,13 @@ class GoogleScraper extends Scraper {
 
         this.last_response = await this.page.goto(startUrl);
 
+        try {
+            await this.page.waitForSelector('input[name="q"]', { timeout: this.STANDARD_TIMEOUT });
+        } catch (e) {
+            return false;
+        }
+
         return true;
-
-        // try {
-        //     await this.page.waitForSelector('input[name="q"]', { timeout: this.STANDARD_TIMEOUT });
-        // } catch (e) {
-        //     return false;
-        // }
-
-        // return true;
     }
 
     async search_keyword(keyword) {
@@ -194,12 +192,15 @@ class GoogleScraper extends Scraper {
         await this.page.keyboard.press("Enter");
     }
 
-    async next_page() {
-        let next_page_link = await this.page.$('#pnnext', {timeout: 1000});
-        if (!next_page_link) {
-            return false;
+    async next_page(forcedPage) {
+
+        if (forcedPage && forcedPage !== 1) {
+            let next_page_link = await this.page.$(`aria-label=Page ${forcedPage}`)
+            if (!next_page_link) {
+                return false;
+            }
+            await next_page_link.click();
         }
-        await next_page_link.click();
 
         return true;
     }
