@@ -141,6 +141,13 @@ module.exports = class Scraper {
     }
 
     /**
+     * 
+     * Notes Related to the prospector:
+     * Modified the original function to not be a loop and only scrape a single
+     * keyword on a single page, this is possible because of the lambda function, the rotating proxies and
+     * modification of the google scraper module to return just the start url rather than trying to mimic user behavior
+     * of starting a search
+     * 
      * Each scraper basically iterates over a list of
      * keywords and a list of pages. This is the generic
      * method for that.
