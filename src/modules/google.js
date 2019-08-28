@@ -195,7 +195,7 @@ class GoogleScraper extends Scraper {
     async next_page(forcedPage) {
 
         if (forcedPage && forcedPage !== 1) {
-            let next_page_link = await this.page.$(`aria-label=Page ${forcedPage}`)
+            let next_page_link = await this.page.$(`[aria-label="Page ${forcedPage}"]`)
             if (!next_page_link) {
                 return false;
             }

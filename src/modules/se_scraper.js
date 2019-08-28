@@ -163,15 +163,8 @@ module.exports = class Scraper {
       this.page_num = 1;
 
       try {
-        if (this.config.num_pages) {
-          let next_page_loaded = await this.next_page(this.config.num_pages);
-          if (next_page_loaded === false) {
-            break;
-          } else {
-            this.num_requests++;
-          }
-        }
         await this.search_keyword(keyword);
+
         // when searching the keyword fails, num_requests will not
         // be incremented.
         this.num_requests++;
@@ -187,23 +180,93 @@ module.exports = class Scraper {
           await this.random_sleep();
         }
 
+        console.log("This should be the starting point: ", this.config.start);
+
+        if (this.config.start) {
+          if (this.config.start > 8) {
+            let next_page_loaded = await this.next_page(8);
+            if (next_page_loaded === false) {
+              break;
+            } else {
+              this.num_requests++;
+            }
+            await this.wait_for_results();
+            if (this.config.sleep_range) {
+              await this.random_sleep();
+            }
+          }
+          let next_page_loaded = await this.next_page(this.config.start);
+          if (next_page_loaded === false) {
+            break;
+          } else {
+            this.num_requests++;
+          }
+          await this.wait_for_results();
+          if (this.config.sleep_range) {
+            await this.random_sleep();
+          }
+        }
+
         let html = await this.page.content();
         let parsed = this.parse(html);
         this.results[keyword][this.page_num] = parsed
           ? parsed
           : await this.parse_async(html);
 
-        if (this.config.html_output) {
-          this.results[keyword][this.page_num].html = html;
-        }
+        console.log("Made it passed the html content");
 
-        if (this.config.screen_output) {
-          this.results[keyword][
-            this.page_num
-          ].screenshot = await this.page.screenshot({
-            encoding: "base64",
-            fullPage: false
-          });
+        if (this.config.html_output) {
+          if (this.config.clean_html_output) {
+            await this.page.evaluate(() => {
+              // remove script and style tags
+              Array.prototype.slice
+                .call(document.getElementsByTagName("script"))
+                .forEach(function(item) {
+                  item.remove();
+                });
+              Array.prototype.slice
+                .call(document.getElementsByTagName("style"))
+                .forEach(function(item) {
+                  item.remove();
+                });
+
+              // remove all comment nodes
+              var nodeIterator = document.createNodeIterator(
+                document.body,
+                NodeFilter.SHOW_COMMENT,
+                {
+                  acceptNode: function(node) {
+                    return NodeFilter.FILTER_ACCEPT;
+                  }
+                }
+              );
+              while (nodeIterator.nextNode()) {
+                var commentNode = nodeIterator.referenceNode;
+                commentNode.remove();
+              }
+            });
+          }
+
+          if (this.config.clean_data_images) {
+            await this.page.evaluate(() => {
+              Array.prototype.slice
+                .call(document.getElementsByTagName("img"))
+                .forEach(function(item) {
+                  let src = item.getAttribute("src");
+                  if (src && src.startsWith("data:")) {
+                    item.setAttribute("src", "");
+                  }
+                });
+            });
+          }
+
+          console.log("Made is past the html cleaning");
+
+          let html_contents = await this.page.content();
+          // https://stackoverflow.com/questions/27841112/how-to-remove-white-space-between-html-tags-using-javascript
+          // TODO: not sure if this is save!
+          html_contents = html_contents.replace(/>\s+</g, "><");
+          this.results[keyword][this.page_num].html = html_contents;
         }
       } catch (e) {
         console.error(
