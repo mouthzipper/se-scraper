@@ -176,9 +176,9 @@ module.exports = class Scraper {
 
         await this.wait_for_results();
 
-        if (this.config.sleep_range) {
-          await this.random_sleep();
-        }
+        // if (this.config.sleep_range) {
+        //   await this.random_sleep();
+        // }
 
         console.log("This should be the starting point: ", this.config.start);
 
@@ -191,9 +191,9 @@ module.exports = class Scraper {
               this.num_requests++;
             }
             await this.wait_for_results();
-            if (this.config.sleep_range) {
-              await this.random_sleep();
-            }
+            // if (this.config.sleep_range) {
+            //   await this.random_sleep();
+            // }
           }
           let next_page_loaded = await this.next_page(this.config.start);
           if (next_page_loaded === false) {
