@@ -11,7 +11,7 @@ const infospace = require("./modules/infospace.js");
 const youtube = require("./modules/youtube.js");
 const duckduckgo = require("./modules/duckduckgo.js");
 const tickersearch = require("./modules/ticker_search.js");
-const { Cluster } = require("./puppeteer-cluster/dist/index.js");
+const { Cluster } = require("puppeteer-cluster");
 const common = require("./modules/common.js");
 var log = common.log;
 
@@ -294,7 +294,7 @@ class ScrapeManager {
     } else {
       // if no custom start_browser functionality was given
       // use puppeteer-cluster for scraping
-      const { Cluster } = require("./puppeteer-cluster/dist/index.js");
+      const { Cluster } = require("puppeteer-cluster");
 
       this.numClusters = this.config.puppeteer_cluster_config.maxConcurrency;
       var perBrowserOptions = [];
