@@ -33,7 +33,7 @@
 
 const puppeteer = require('puppeteer');
 const fs = require('fs');
-const got = require('got');
+// const got = require('got');
 
 try {
     (async () => {
@@ -81,7 +81,7 @@ try {
             return document.querySelectorAll('.rc-audiochallenge-tdownload-link').getAttribute('href');
         });
         console.log('Got audio download link: ', download_link);
-        got.stream(download_link).pipe(fs.createWriteStream('audio.mp3'));
+        // got.stream(download_link).pipe(fs.createWriteStream('audio.mp3'));
 
         await browser.close();
     })()
